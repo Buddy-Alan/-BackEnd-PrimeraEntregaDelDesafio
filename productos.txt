@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "timestamp": "2022-10-29T14:51:22.318Z",
+    "title": "Cuaderno Avon 32.0",
+    "price": 600,
+    "thumbnail": "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/404/379/products/thumb_1594599668-211-bc076942bcb6d91bf716055058791101-1024-1024.jpg",
+    "descripcion": "Cuaderno",
+    "stock": 31,
+    "codigo": "AA3B"
+  }
+]

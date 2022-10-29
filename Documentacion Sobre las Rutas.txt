@@ -1,0 +1,39 @@
+enpoints de  productRouter (archivo /routes/products.js)
+
+productRouter.get("/") => Devuelve todos los  productos que se encuentran guardados en el archivo txt,
+		Si en la peticion recibe un 1 significa que el  archivo esta vacio, si recibe un 2 significa que el archivo NO  existe.
+
+productRouter.get("/:id") => Devuelve un producto de ID especifico. Se realiza un filtro al momento de la peticion, con el fin de informar si el ID solicitado existe o no en la BD.
+
+productRouter.post("/") => Se utiliza para agregar productos a la BD. Si cuando se intenta agregar el producto, devuelve el numero 1 nos informa que ya tenemos ese producto guardado.
+			Si al intentar guardar el  producto, nos devuelve el numero 2, nos iforma que  estan mal completado los datos requeridos para guardar la informacion. 
+			Para guardar un producto se requiere tener:"title", "price", "thumbnail",  "descripcion", "Cuaderno", "stock, "codigo". Si uno de estos datos no se completa,devuelve un 1 y se envia un mensaje de error.
+
+productRouter.put("/:id") => Se utiliza para actualizar un producto de un ID especifico.  Si al intentar actualizar devuele "undefined", eso informa que el ID solicitado no existe en la BD.
+			Para actualizar un producto se requiere tener:"title", "price", "thumbnail",  "descripcion", "Cuaderno", "stock, "codigo". Si uno de estos datos no se completa,devuelve un 1 y se envia un mensaje de error.
+
+productRouter.delete("/:id") => Borra un producto de ID solicitado. Se realiza un filtro desde  getItems.js, en el cual nos informa si el producto se pudo eliminar o si no existe, 
+				tambien informa si el archivo no existe o si esta vacio.
+
+
+
+
+enpoints de  carritoRouter (archivo /routes/routerCarts.js)
+
+carritoRouter.post("/") => Crea un carrito y genera un dato, a la hora de crear el carrito nos devuelve el carritos creado. Si el producto solicitado no existe, envia un mensaje de error.
+	Para crear el producto, por postman hay que enviar UNICAMENTE el "id" del producto solicitado. Los productos se agregan de a 1 al carrito, para agregar mas productos del mismo se envian por carritoRouter.post("/:id/productos").
+
+carritoRouter.get("/:id/productos") => Obtiene todos los productos del carrito solicitado. El mismo posee un filtro, cuando recibe un 1 nos informa que el carrito no existe, cuando recibe un 2, nos informa que no hay ningun carrito creado.
+		Si todo esta ok, nos devueve el carrito solicitado. Unicamente hay que enviar el carrito solicitado por parametros.
+
+carritoRouter.post("/:id/productos") => Actualiza el stock del producto de un carrito, o agrega mas productos al carrito. Posee varios filtros, el primero que se hace con "carritoByID", se utiliza para informar si el carrito no existe, o si esta vacio el archivo de carrito.
+		Por otro lado, realiza un filtro para informarnos si el producto solicitado NO existe. A su vez tambien tiene un pequeño algoritmo para cuando se agrega por priemra vez un producto, con el objetivo de que se agrege un solo producto, y no  todo el stock del mismo.
+		se utiliza la funcion primerStock() con el fin de agregar por primera vez un producto al carrito, tambien se utiliza la funcion actualizarProducto() para borra stock del producto solicitado.
+
+
+carritoRouter.delete("/:id") => Se utiliza para borrar un carrito por su ID.  Posee unos filtros, si recibe un 1, significa que el carrito de ID solicitado no existe, si recibe un 2 informa que el archivo esta vacio. 
+		Si todo funciona correctamente nos devuelve un mensaje informando que se borro el carrito solicitado. El ID se envia por parametros.
+
+carritoRouter.delete("/:id/productos/:id_prod") => Borra los productos de un carrito solicitado. Se envia el carrito, y el producto a borrar por parametros.
+	Posee varios filtros, uno se carritoByID, en el cual si  es un 1, nos informa que el carrito no existe, si es un 2, nos informa que no hay carrito creado, y si es undefined, nos informa que el archivo esta vacio.
+	Si el carrito existe, despues se busca el producto con un findIndex, con el fin de saber si el producto esta en el carrito o no, si el  producto esta, lo borra. Si el producto no se encuentra, nos devuelve un mensaje informandolo.
